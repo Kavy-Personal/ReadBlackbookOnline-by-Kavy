@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-black select-none">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Black Book — Vocabulary Reader & Community</title>
-  
-  <!-- Open Graph & PWA Meta -->
   <meta name="description" content="Black Book of English Vocabulary — Optimized Mobile OLED Dark Mode Reader crafted by Kavy-Codes / krush91.">
-  <meta property="og:title" content="Black Book of English Vocabulary — Reader & Community">
-  <meta property="og:description" content="OLED dark mode digital book reader with isolated filters and official community hub.">
   <meta name="theme-color" content="#000000">
   <meta name="color-scheme" content="dark">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="BlackBook">
-
+  
   <!-- Embedded Vector SVG Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/%3E%3C/svg%3E">
 
@@ -23,53 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS Engine -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            obsidian: {
-              black: '#000000',
-              base: '#090909',
-              card: '#121212',
-              hover: '#1c1c1c',
-              border: 'rgba(255, 255, 255, 0.08)',
-              borderFocus: 'rgba(255, 255, 255, 0.28)',
-              text: '#f2f2f2',
-              muted: '#8e8e93',
-              dim: '#52525b'
-            },
-            discord: {
-              brand: '#5865F2',
-              hover: '#4752c4',
-              glow: 'rgba(88, 101, 242, 0.45)'
-            }
-          },
-          fontFamily: {
-            sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
-            mono: ['"JetBrains Mono"', '"SF Mono"', 'Menlo', 'Consolas', 'monospace']
-          },
-          borderRadius: {
-            reader: '8px'
-          }
-        }
-      }
-    };
-  </script>
-
   <style>
-    :root {
-      --sat: env(safe-area-inset-top, 0px);
-      --sab: env(safe-area-inset-bottom, 0px);
-      --sal: env(safe-area-inset-left, 0px);
-      --sar: env(safe-area-inset-right, 0px);
-      --top-nav-height: calc(48px + var(--sat));
-      --bottom-discord-height: calc(62px + var(--sab));
-    }
-
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -78,20 +27,47 @@
       outline: none;
     }
 
+    :root {
+      --bg-black: #000000;
+      --bg-surface: #0a0a0a;
+      --bg-card: #111111;
+      --bg-elevated: #161616;
+      --bg-hover: #222222;
+      --bg-active: #2e2e2e;
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-medium: rgba(255, 255, 255, 0.16);
+      --border-focus: rgba(255, 255, 255, 0.35);
+
+      --text-white: #ffffff;
+      --text-primary: #ededed;
+      --text-muted: #8e8e93;
+      --text-faint: #52525b;
+
+      --discord-brand: #5865F2;
+      --discord-hover: #4752c4;
+
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --top-nav-height: calc(48px + var(--safe-top));
+      --bottom-discord-height: calc(64px + var(--safe-bottom));
+
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', "SF Mono", Consolas, monospace;
+    }
+
     html, body {
+      width: 100%;
       height: 100%;
       height: 100dvh;
-      width: 100%;
-      width: 100dvw;
       overflow: hidden;
-      background-color: #000000;
-      color: #ededed;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-black);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
       font-size: 13px;
       line-height: 1.45;
       user-select: none;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
     #app {
@@ -100,22 +76,9 @@
       width: 100vw;
       height: 100vh;
       height: 100dvh;
-      background: #000000;
+      background: var(--bg-black);
       position: relative;
       overflow: hidden;
-    }
-
-    /* Fixed Isolated Security Overlay (Never displaces the reader layout) */
-    #security-overlay {
-      position: fixed !important;
-      inset: 0 !important;
-      width: 100vw !important;
-      height: 100dvh !important;
-      z-index: 99999 !important;
-      background-color: rgba(3, 3, 5, 0.88) !important;
-      backdrop-filter: blur(34px) saturate(180%) contrast(1.05) !important;
-      -webkit-backdrop-filter: blur(34px) saturate(180%) contrast(1.05) !important;
-      transition: opacity 300ms ease, visibility 300ms ease;
     }
 
     /* Top Bar */
@@ -124,24 +87,128 @@
       align-items: center;
       justify-content: space-between;
       height: var(--top-nav-height);
-      padding: var(--sat) 12px 0 12px;
-      background-color: #090909;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: var(--safe-top) 12px 0 12px;
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
       z-index: 40;
       flex-shrink: 0;
       gap: 8px;
     }
 
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .book-glyph {
+      width: 28px;
+      height: 28px;
+      background: #141414;
+      border: 1px solid var(--border-medium);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .book-glyph svg {
+      width: 15px;
+      height: 15px;
+      stroke: var(--text-white);
+    }
+
+    .meta-col {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .book-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-white);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .creator-pill {
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .creator-pill strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 32px;
+      padding: 0 8px;
+      min-width: 32px;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 7px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 12px;
+      font-family: var(--font-sans);
+      font-weight: 500;
+      transition: all 120ms ease;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+      background: var(--bg-hover);
+    }
+
+    .btn-border {
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .btn-border:hover {
+      background: var(--bg-elevated);
+      color: var(--text-white);
+      border-color: var(--border-medium);
+    }
+
+    .btn-active {
+      background: var(--bg-active) !important;
+      color: var(--text-white) !important;
+      border-color: var(--border-focus) !important;
+    }
+
+    /* Reader Stage & Embed */
     .reader-stage {
       flex: 1 1 auto;
       width: 100%;
       height: calc(100dvh - var(--top-nav-height) - var(--bottom-discord-height));
       position: relative;
-      background: #000000;
+      background: var(--bg-black);
       overflow: hidden;
     }
 
-    /* Isolated Document GPU Filter */
     #archive-iframe {
       width: 100%;
       height: 100%;
@@ -151,19 +218,22 @@
       transition: filter 180ms ease, opacity 250ms ease;
     }
 
-    /* Stage loader spinner */
     .stage-loader {
       position: absolute;
       inset: 0;
-      background: #000000;
+      background: var(--bg-black);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 14px;
       z-index: 10;
       transition: opacity 300ms ease;
       pointer-events: none;
+    }
+
+    .stage-loader.hidden {
+      opacity: 0;
     }
 
     .pulse-ring {
@@ -185,15 +255,15 @@
       align-items: center;
       justify-content: center;
       height: var(--bottom-discord-height);
-      padding: 6px 12px calc(6px + var(--sab)) 12px;
+      padding: 6px 12px calc(6px + var(--safe-bottom)) 12px;
       background-color: rgba(6, 6, 8, 0.96);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(88, 101, 242, 0.28);
+      border-top: 1px solid rgba(88, 101, 242, 0.24);
       z-index: 40;
       flex-shrink: 0;
       width: 100%;
-      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.7);
     }
 
     .btn-discord-hero {
@@ -202,19 +272,18 @@
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      max-width: 520px;
+      max-width: 480px;
       height: 48px;
       padding: 0 16px;
       background: linear-gradient(135deg, #5865F2 0%, #4752c4 100%);
       color: #ffffff;
       text-decoration: none;
       border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(88, 101, 242, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 18px rgba(88, 101, 242, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       cursor: pointer;
       overflow: hidden;
       transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
-      touch-action: manipulation;
     }
 
     .btn-discord-hero::after {
@@ -224,25 +293,56 @@
       left: -60%;
       width: 40%;
       height: 200%;
-      background: linear-gradient(
-        60deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.25) 50%,
-        rgba(255, 255, 255, 0) 100%
-      );
+      background: linear-gradient(60deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.22) 50%, rgba(255, 255, 255, 0) 100%);
       transform: rotate(25deg);
-      animation: sheen 3.2s infinite;
+      animation: sheen 3.5s infinite;
       pointer-events: none;
     }
 
     @keyframes sheen {
-      0%, 65% { transform: translateX(0) rotate(25deg); }
-      100% { transform: translateX(500%) rotate(25deg); }
+      0%, 70% { transform: translateX(0) rotate(25deg); }
+      100% { transform: translateX(450%) rotate(25deg); }
     }
 
-    .btn-discord-hero:active {
-      transform: scale(0.98);
-      box-shadow: 0 2px 10px rgba(88, 101, 242, 0.6);
+    .discord-hero-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .discord-hero-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .discord-hero-text {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      line-height: 1.25;
+      min-width: 0;
+    }
+
+    .discord-hero-main {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+
+    .discord-hero-sub {
+      font-size: 10px;
+      color: #e0e3ff;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .live-dot-glow {
@@ -255,271 +355,570 @@
       flex-shrink: 0;
     }
 
-    /* Danger Psychology Elements */
-    .danger-glow {
-      box-shadow: 0 0 35px rgba(239, 68, 68, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    .discord-hero-chevron {
+      width: 18px;
+      height: 18px;
+      stroke: #ffffff;
+      stroke-width: 2.2;
+      fill: none;
+      flex-shrink: 0;
     }
 
-    .danger-border-pulse {
-      animation: dangerPulse 2.4s ease-in-out infinite;
+    /* Fixed Decoupled Overlay */
+    #security-overlay {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100dvh !important;
+      z-index: 99999 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      background: rgba(3, 3, 5, 0.88) !important;
+      backdrop-filter: blur(34px) saturate(180%) contrast(1.05) !important;
+      -webkit-backdrop-filter: blur(34px) saturate(180%) contrast(1.05) !important;
+      transition: opacity 300ms ease, visibility 300ms ease;
     }
 
-    @keyframes dangerPulse {
-      0%, 100% { border-color: rgba(239, 68, 68, 0.4); }
-      50% { border-color: rgba(239, 68, 68, 0.85); box-shadow: 0 0 25px rgba(239, 68, 68, 0.35); }
+    .sec-card {
+      width: 100%;
+      max-width: 440px;
+      max-height: 92dvh;
+      overflow-y: auto;
+      border-radius: 18px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.85);
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .sec-card-danger {
+      background: linear-gradient(180deg, #1c0808 0%, #120606 60%, #090303 100%);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      box-shadow: 0 0 35px rgba(239, 68, 68, 0.28);
     }
 
     .hazard-stripe {
-      background: repeating-linear-gradient(
-        -45deg,
-        rgba(239, 68, 68, 0.14),
-        rgba(239, 68, 68, 0.14) 8px,
-        transparent 8px,
-        transparent 16px
-      );
+      margin: -18px -18px 0 -18px;
+      height: 10px;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      border-bottom: 1px solid rgba(239, 68, 68, 0.3);
+      background: repeating-linear-gradient(-45deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.2) 8px, transparent 8px, transparent 16px);
     }
 
-    .drawer-transition {
-      transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1), opacity 240ms ease;
+    .sec-card-warning {
+      background: linear-gradient(180deg, #140f06 0%, #0d0903 60%, #070502 100%);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.25);
     }
 
-    .pill-active {
-      background-color: #242424 !important;
-      color: #ffffff !important;
-      border-color: rgba(255, 255, 255, 0.3) !important;
+    .amber-stripe {
+      margin: -18px -18px 0 -18px;
+      height: 8px;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      background: #f59e0b;
     }
+
+    .sec-card-hub {
+      background: linear-gradient(180deg, #111224 0%, #0c0d18 60%, #07070e 100%);
+      border: 1px solid rgba(88, 101, 242, 0.45);
+      box-shadow: 0 0 40px rgba(88, 101, 242, 0.3);
+    }
+
+    .indigo-stripe {
+      margin: -18px -18px 0 -18px;
+      height: 8px;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      background: #5865F2;
+    }
+
+    .sec-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin: 0 auto;
+    }
+
+    .sec-icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 6px auto;
+    }
+
+    .btn-sec-action {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 160ms ease;
+      text-decoration: none;
+    }
+
+    .btn-sec-action:active {
+      transform: scale(0.98);
+    }
+
+    .evidence-container {
+      background: #100404;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 12px;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .evidence-img {
+      width: 100%;
+      max-height: 230px;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid rgba(127, 29, 29, 0.6);
+      display: block;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    /* Drawers */
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+    }
+
+    .backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 88%;
+      max-width: 380px;
+      background: var(--bg-surface);
+      z-index: 110;
+      display: flex;
+      flex-direction: column;
+      transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 0 40px rgba(0,0,0,0.8);
+      padding-top: var(--safe-top);
+      padding-bottom: var(--safe-bottom);
+    }
+
+    .drawer-left {
+      left: 0;
+      border-right: 1px solid var(--border-subtle);
+      transform: translateX(-100%);
+    }
+
+    .drawer-right {
+      right: 0;
+      border-left: 1px solid var(--border-subtle);
+      transform: translateX(100%);
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 54px;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .drawer-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-white);
+    }
+
+    .drawer-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 8px;
+    }
+
+    .index-list, .bm-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .index-item, .bm-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.015);
+      border-radius: 8px;
+      color: var(--text-primary);
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .index-item:hover, .bm-item:hover {
+      background: var(--bg-hover);
+      color: var(--text-white);
+    }
+
+    .page-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--bg-elevated);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .page-jump-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .page-input {
+      flex: 1;
+      height: 38px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-medium);
+      border-radius: 8px;
+      color: var(--text-white);
+      padding: 0 12px;
+      font-family: var(--font-mono);
+    }
+
+    .btn-submit-jump {
+      height: 38px;
+      padding: 0 14px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-medium);
+      border-radius: 8px;
+      color: var(--text-white);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .pref-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .pref-title { font-size: 13px; font-weight: 600; color: var(--text-white); }
+    .pref-desc { font-size: 11px; color: var(--text-muted); }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; cursor: pointer; inset: 0;
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-medium);
+      border-radius: 24px;
+      transition: 0.2s;
+    }
+
+    .slider:before {
+      position: absolute; content: "";
+      height: 18px; width: 18px; left: 2px; bottom: 2px;
+      background-color: var(--text-muted);
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+
+    input:checked + .slider { background-color: #ffffff; border-color: #ffffff; }
+    input:checked + .slider:before { transform: translateX(20px); background-color: #000000; }
+
+    .notes-box {
+      width: 100%; height: 130px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-medium);
+      border-radius: 8px;
+      color: var(--text-primary);
+      padding: 10px;
+      resize: none;
+    }
+
+    .toast-box {
+      position: fixed;
+      bottom: calc(var(--bottom-discord-height) + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 250;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toast-item {
+      background: rgba(18, 18, 18, 0.94);
+      border: 1px solid var(--border-medium);
+      color: var(--text-white);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 180ms ease;
+    }
+
+    .toast-item.show { opacity: 1; transform: translateY(0); }
   </style>
 </head>
-
-<body class="flex flex-col h-full w-full bg-black font-sans antialiased text-obsidian-text overflow-hidden select-none">
+<body>
 
   <!-- =========================================================================
-       THREE-STEP ANTI-TAMPER SECURITY & COMMUNITY VERIFICATION OVERLAY
-       (Rendered as a fixed modal with deep frosted-glass blur over reader)
+       THREE-STEP ANTI-TAMPER SECURITY & DISCORD OAUTH2 VERIFICATION OVERLAY
        ========================================================================= -->
-  <div 
-    id="security-overlay" 
-    class="flex items-center justify-center p-3 sm:p-4">
+  <div id="security-overlay">
     
-    <!-- STEP 1: SECURITY ADVISORY (DANGER & FRAUD ALERT + SCREENSHOT EVIDENCE) -->
-    <div 
-      id="sec-step-1" 
-      class="w-full max-w-md max-h-[92dvh] overflow-y-auto bg-gradient-to-b from-[#1c0808] via-[#120606] to-[#090303] border danger-border-pulse rounded-2xl p-4 sm:p-5 danger-glow flex flex-col space-y-3.5 text-center relative transition-all duration-200">
-      
-      <!-- Danger Strip Header -->
-      <div class="hazard-stripe -mx-4 -mt-4 sm:-mx-5 sm:-mt-5 h-2.5 rounded-t-2xl border-b border-red-500/30"></div>
+    <!-- STEP 1: DANGER ALERT & FLAGGED EVIDENCE -->
+    <div id="sec-step-1" class="sec-card sec-card-danger">
+      <div class="hazard-stripe"></div>
 
-      <!-- Alert Icon & Badge -->
-      <div class="mx-auto flex flex-col items-center">
-        <div class="w-12 h-12 rounded-full bg-red-950/80 border-2 border-red-500 flex items-center justify-center text-red-400 mb-2 shadow-[0_0_20px_rgba(239,68,68,0.5)]">
-          <svg class="w-6 h-6 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <div>
+        <div class="sec-icon-circle" style="background: rgba(69, 10, 10, 0.8); border: 2px solid #ef4444; color: #f87171;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
             <line x1="12" y1="9" x2="12" y2="13"></line>
             <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
         </div>
-        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-900/40 border border-red-500/60 text-[10px] font-mono font-bold tracking-wider text-red-300 uppercase">
-          <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+        <div class="sec-badge" style="background: rgba(127, 29, 29, 0.4); border: 1px solid rgba(239, 68, 68, 0.6); color: #fca5a5;">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: #ef4444; display: inline-block;"></span>
           CRITICAL SECURITY ADVISORY
         </div>
       </div>
 
-      <!-- Danger Title -->
       <div>
-        <h2 class="text-[17px] sm:text-[18px] font-extrabold text-white tracking-tight leading-snug">
+        <h2 style="font-size: 17px; font-weight: 800; color: #ffffff; letter-spacing: -0.01em;">
           DO NOT TRUST CIRCULATED LINKS
         </h2>
-        <p class="text-[11px] sm:text-[12px] text-red-200/90 font-medium mt-1 leading-relaxed">
-          Do not trust the links circulated by Pickme girls like Ririi (Dyettcoke) and Catfishes like Nick atleast.
+        <p style="font-size: 11px; color: #fecaca; margin-top: 4px; line-height: 1.45;">
+          Do not trust the links circulated by Pickme girls like ririi (Dyettcoke) and Catfishes like Nike atleast.
         </p>
       </div>
 
-      <!-- FLAGGED EVIDENCE: SCREENSHOT OF UNAUTHORIZED CHANNELS / CIRCULATORS -->
-      <div class="w-full bg-[#100404] border border-red-500/40 rounded-xl overflow-hidden p-1.5 relative group">
-        <div class="text-[9px] font-mono text-red-300/80 uppercase tracking-widest text-left mb-1.5 px-1 flex items-center justify-between">
-          <span class="flex items-center gap-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
-            ⚠️ Flagged Unauthorized Account / Link Source
-          </span>
-          <span class="text-red-400 font-bold bg-red-950/80 px-1.5 py-0.5 rounded border border-red-500/30">FLAGGED</span>
+      <div class="evidence-container">
+        <div style="font-size: 9px; font-family: var(--font-mono); color: #fca5a5; text-transform: uppercase; letter-spacing: 0.05em; display: flex; justify-content: space-between; margin-bottom: 6px;">
+          <span>⚠️ Flagged Link Source / Scraper Account</span>
+          <span style="color: #ef4444; font-weight: bold; background: rgba(69, 10, 10, 0.8); padding: 1px 5px; border-radius: 4px;">FLAGGED</span>
         </div>
         
-        <!-- Live Evidence Screenshot -->
-        <a href="https://i.ibb.co/3Y0vFjQt/screenshot-20261005-091242-region.png" target="_blank" rel="noopener noreferrer" class="block relative overflow-hidden rounded-lg bg-black/60 group cursor-zoom-in" title="Tap to view full screenshot">
+        <a href="https://i.ibb.co/3Y0vFjQt/screenshot-20261005-091242-region.png" target="_blank" rel="noopener noreferrer" style="display: block; position: relative; text-decoration: none;" title="Tap to expand evidence screenshot">
           <img 
             id="advisory-evidence-img"
             src="https://i.ibb.co/3Y0vFjQt/screenshot-20261005-091242-region.png" 
-            alt="Evidence of unauthorized link circulator account"
-            class="w-full max-h-56 sm:max-h-64 object-contain rounded-lg border border-red-900/60 transition-transform duration-200 group-hover:scale-[1.01]"
+            alt="Evidence of unauthorized circulator account"
+            class="evidence-img"
             onerror="this.src='https://placehold.co/600x320/220505/f87171?text=Evidence+Screenshot+Unavailable';" />
-          <div class="absolute bottom-1 right-1.5 bg-black/80 backdrop-blur-sm text-[8px] font-mono text-red-300 px-1.5 py-0.5 rounded border border-red-500/20">
+          <div style="position: absolute; bottom: 6px; right: 6px; background: rgba(0,0,0,0.8); font-size: 8px; font-family: var(--font-mono); color: #fca5a5; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(239,68,68,0.3);">
             🔍 Tap to expand
           </div>
         </a>
-        
-        <div class="text-[9px] text-red-400/80 text-left mt-1.5 px-1">
+
+        <div style="font-size: 9px; color: #f87171; margin-top: 6px;">
           * Anyone charging money or claiming ownership of this digital tool is misleading you.
         </div>
       </div>
 
-      <!-- Student Safety Notes -->
-      <div class="bg-red-950/30 border border-red-500/20 rounded-xl p-2.5 text-left text-[11px] text-red-100/90 leading-relaxed space-y-1">
-        <p class="flex items-start gap-1.5">
-          <span class="text-red-400 font-bold">✖</span>
-          <span>Never pay anyone for access. This tool is completely free.</span>
-        </p>
-        <p class="flex items-start gap-1.5">
-          <span class="text-red-400 font-bold">✖</span>
-          <span>Do not open suspicious modified clones or unverified shortened URLs.</span>
-        </p>
+      <div style="background: rgba(69, 10, 10, 0.35); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 10px; padding: 10px; text-align: left; font-size: 11px; color: #fee2e2; line-height: 1.5;">
+        <p>✖ Never pay anyone for access. This tool is completely free.</p>
+        <p>✖ Do not open suspicious clones or unverified shortened URLs.</p>
       </div>
 
-      <!-- Step 1 Button: Proceeds to Step 2 -->
-      <button 
-        onclick="goToStep2()" 
-        class="w-full py-2.5 px-4 bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white font-bold text-[13px] rounded-xl shadow-lg shadow-red-900/50 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+      <button onclick="goToStep2()" class="btn-sec-action" style="background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%); color: #ffffff; box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);">
         <span>Acknowledge & Continue</span>
-        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </button>
 
-      <div class="text-[10px] font-mono text-zinc-500">
+      <div style="font-size: 10px; font-family: var(--font-mono); color: #71717a;">
         STEP 1 OF 3 • VERIFICATION PIPELINE
       </div>
     </div>
 
-    <!-- STEP 2: CEASE NOTICE TO THOSE WHO CIRCULATE & STEAL LINKS -->
-    <div 
-      id="sec-step-2" 
-      class="w-full max-w-md max-h-[92dvh] overflow-y-auto bg-gradient-to-b from-[#140f06] via-[#0d0903] to-[#070502] border border-amber-500/50 rounded-2xl p-4 sm:p-5 shadow-[0_0_35px_rgba(245,158,11,0.25)] flex-col space-y-3.5 text-center relative hidden transition-all duration-200">
-      
-      <!-- Amber Header Accent -->
-      <div class="-mx-4 -mt-4 sm:-mx-5 sm:-mt-5 h-2 rounded-t-2xl bg-amber-500/80"></div>
+    <!-- STEP 2: CEASE NOTICE TO CIRCULATORS & SCRAPERS -->
+    <div id="sec-step-2" class="sec-card sec-card-warning" style="display: none;">
+      <div class="amber-stripe"></div>
 
-      <!-- Notice Badge -->
-      <div class="mx-auto flex flex-col items-center">
-        <div class="w-12 h-12 rounded-full bg-amber-950/70 border-2 border-amber-500 flex items-center justify-center text-amber-400 mb-2 shadow-[0_0_20px_rgba(245,158,11,0.35)]">
-          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <div>
+        <div class="sec-icon-circle" style="background: rgba(69, 42, 6, 0.8); border: 2px solid #f59e0b; color: #fbbf24;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             <line x1="12" y1="8" x2="12" y2="12"></line>
             <line x1="12" y1="16" x2="12.01" y2="16"></line>
           </svg>
         </div>
-        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-900/40 border border-amber-500/50 text-[10px] font-mono font-bold tracking-wider text-amber-300 uppercase">
+        <div class="sec-badge" style="background: rgba(120, 53, 15, 0.4); border: 1px solid rgba(245, 158, 11, 0.5); color: #fde68a;">
           DIRECT NOTICE TO SCRAPERS
         </div>
       </div>
 
-      <!-- Warning Title -->
       <div>
-        <h2 class="text-[17px] font-extrabold text-white tracking-tight leading-snug">
+        <h2 style="font-size: 17px; font-weight: 800; color: #ffffff; letter-spacing: -0.01em;">
           To Those Who Steal & Circulate Our Links:
         </h2>
-        <p class="text-[11px] text-amber-200/80 font-mono mt-1">
+        <p style="font-size: 11px; color: #fde68a; font-family: var(--font-mono); margin-top: 4px;">
           Stop stripping curator credits and redistributing private mirrors.
         </p>
       </div>
 
-      <!-- Warning Message Body -->
-      <div class="bg-amber-950/20 border border-amber-500/30 rounded-xl p-3 text-left space-y-2 text-[11px] text-amber-100/90 leading-relaxed">
+      <div style="background: rgba(120, 53, 15, 0.25); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 10px; padding: 12px; text-align: left; font-size: 11px; color: #fef3c7; line-height: 1.55; display: flex; flex-direction: column; gap: 8px;">
         <p>
           This dedicated web app and continuous document pipeline were designed and maintained by 
-          <strong class="text-white font-bold">Kavy-Codes / krush91</strong> for serious vocabulary learners.
+          <strong style="color: #ffffff; font-weight: 700;">Kavy-Codes / krush91</strong> for serious vocabulary learners.
         </p>
-        <p class="text-amber-200/80">
+        <p style="color: #fde68a;">
           Re-hosting without attribution, passing off our hard work as your own on Telegram/WhatsApp channels, or putting our tools behind monetized link shorteners is strictly monitored.
         </p>
-        <p class="text-white font-medium">
-          If you want to share this reader with your students or study group, share the <strong class="text-amber-300">Official Discord Server link</strong> so learners always receive genuine, untampered updates.
+        <p style="color: #ffffff;">
+          If you want to share this reader with your students or study group, share the <strong style="color: #f59e0b;">Official Discord Server link</strong> so learners always receive genuine, untampered updates.
         </p>
       </div>
 
-      <!-- Step 2 Button: Proceeds to Step 3 -->
-      <button 
-        onclick="goToStep3()" 
-        class="w-full py-2.5 px-4 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-[13px] rounded-xl shadow-lg shadow-amber-900/40 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+      <button onclick="goToStep3()" class="btn-sec-action" style="background: linear-gradient(90deg, #d97706 0%, #b45309 100%); color: #ffffff; box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);">
         <span>I Understand & Agree → Proceed</span>
       </button>
 
-      <div class="text-[10px] font-mono text-zinc-500">
+      <div style="font-size: 10px; font-family: var(--font-mono); color: #71717a;">
         STEP 2 OF 3 • CEASE NOTICE
       </div>
     </div>
 
-    <!-- STEP 3: OFFICIAL HUB GATEWAY (READER ON TOP, DISCORD BUTTON BELOW) -->
-    <div 
-      id="sec-step-3" 
-      class="w-full max-w-md max-h-[92dvh] overflow-y-auto bg-gradient-to-b from-[#111224] via-[#0c0d18] to-[#07070e] border border-indigo-500/40 rounded-2xl p-4 sm:p-5 shadow-[0_0_40px_rgba(88,101,242,0.3)] flex-col space-y-3.5 text-center relative hidden transition-all duration-200">
-      
-      <!-- Top Indigo Accent -->
-      <div class="-mx-4 -mt-4 sm:-mx-5 sm:-mt-5 h-2 rounded-t-2xl bg-indigo-500"></div>
+    <!-- STEP 3: DISCORD OAUTH2 SERVER MEMBERSHIP GATE -->
+    <div id="sec-step-3" class="sec-card sec-card-hub" style="display: none;">
+      <div class="indigo-stripe"></div>
 
-      <!-- Community Badge -->
-      <div class="mx-auto flex flex-col items-center">
-        <div class="w-12 h-12 rounded-full bg-indigo-950/80 border-2 border-indigo-500 flex items-center justify-center text-white mb-2 shadow-[0_0_20px_rgba(88,101,242,0.5)]">
-          <svg class="w-7 h-7 text-indigo-400" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+      <div>
+        <div class="sec-icon-circle" style="background: rgba(26, 28, 66, 0.8); border: 2px solid #5865F2; color: #ffffff;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
           </svg>
         </div>
-        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-500/20 border border-indigo-500/40 text-[10px] font-mono font-bold tracking-wider text-indigo-300 uppercase">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]"></span>
-          OFFICIAL VERIFIED HUB
+        <div class="sec-badge" style="background: rgba(88, 101, 242, 0.2); border: 1px solid rgba(88, 101, 242, 0.4); color: #c7d2fe;">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: #5865F2; display: inline-block;"></span>
+          SERVER MEMBERSHIP LOCKED
         </div>
       </div>
 
-      <!-- Hub Content -->
       <div>
-        <h2 class="text-[17px] font-extrabold text-white tracking-tight leading-snug">
-          Access Genuine Resources & Discussion
+        <h2 style="font-size: 17px; font-weight: 800; color: #ffffff; letter-spacing: -0.01em;">
+          Official Member Verification
         </h2>
-        <p class="text-[11px] text-slate-300 mt-1 leading-relaxed">
-          Join to receive untampered links, high-yield vocabulary tests, exam drills, and direct developer support.
+        <p style="font-size: 11px; color: #cbd5e1; margin-top: 4px; line-height: 1.45;">
+          To stop unauthorized and scraped mirrors, this reader requires verification that you are a member of our Discord study server.
         </p>
       </div>
 
-      <!-- Verified Curator Info Box -->
-      <div class="bg-white/5 border border-white/10 rounded-xl p-2.5 flex items-center justify-between text-left">
-        <div class="flex flex-col">
-          <span class="text-[10px] font-mono text-zinc-400 uppercase tracking-wider">Official Curator</span>
-          <span class="text-[12px] font-bold text-white">Kavy-Codes / krush91</span>
-        </div>
-        <div class="text-right">
-          <span class="text-[9px] font-mono text-zinc-400 block uppercase">Discord ID</span>
-          <span class="text-[10px] font-mono bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 px-2 py-0.5 rounded">930434072449257502</span>
+      <!-- Auth Error Notification (If rejected) -->
+      <div id="oauth-error-box" style="display:none; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 10px; padding: 10px; font-size: 11px; color: #fca5a5; text-align: left;">
+        <span id="oauth-error-text">Membership verification failed. Please join the official server first.</span>
+      </div>
+
+      <!-- Verified User Card (Rendered if authenticated) -->
+      <div id="oauth-user-badge" style="display:none; background: rgba(88, 101, 242, 0.15); border: 1px solid rgba(88, 101, 242, 0.35); border-radius: 12px; padding: 12px; align-items: center; gap: 12px; text-align: left;">
+        <img id="oauth-user-avatar" src="" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid #5865F2;">
+        <div style="flex: 1; min-width: 0;">
+          <div style="font-size: 10px; font-family: var(--font-mono); color: #94a3b8; text-transform: uppercase;">Verified Discord Member</div>
+          <div id="oauth-user-name" style="font-size: 13px; font-weight: 800; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>
         </div>
       </div>
 
-      <!-- ACTION BUTTONS: READER BUTTON ON TOP, DISCORD BUTTON BELOW -->
-      <div class="space-y-2.5 pt-1">
-        
-        <!-- BUTTON 1 (ABOVE): CONTINUE TO THE READER -->
-        <button 
-          onclick="enterReader()" 
-          class="w-full py-3 px-4 bg-white hover:bg-zinc-200 text-black font-extrabold text-[13px] rounded-xl shadow-lg transition-all active:scale-[0.98] flex items-center justify-center gap-2">
-          <span>Continue to the Reader</span>
-          <svg class="w-4 h-4 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </button>
-
-        <!-- BUTTON 2 (BELOW): JOIN OFFICIAL DISCORD SERVER -->
-        <a 
-          href="https://discord.com/invite/jEWhUtJNE" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-[13px] rounded-xl shadow-lg shadow-indigo-600/30 transition-all active:scale-[0.98] flex items-center justify-center gap-2 border border-indigo-400/40">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+      <!-- OAuth Login Action -->
+      <div id="oauth-actions-container" style="display: flex; flex-direction: column; gap: 10px;">
+        <button id="btn-oauth-login" onclick="startDiscordOAuth()" class="btn-sec-action" style="background: #5865F2; color: #ffffff; box-shadow: 0 4px 18px rgba(88, 101, 242, 0.5);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
           </svg>
-          <span>Join Official Discord Server</span>
+          <span>Verify with Discord (1-Click)</span>
+        </button>
+
+        <a href="https://discord.com/invite/jEWhUtJNE" target="_blank" rel="noopener noreferrer" class="btn-sec-action" style="background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.15);">
+          <span>Not joined yet? Join Server</span>
         </a>
       </div>
 
-      <div class="text-[10px] font-mono text-zinc-500">
-        STEP 3 OF 3 • OFFICIAL COMMUNITY
+      <!-- Unlock reader action (Shown after successful token check) -->
+      <button id="btn-enter-reader" onclick="enterReader()" class="btn-sec-action" style="display:none; background: #ffffff; color: #000000; box-shadow: 0 4px 18px rgba(255,255,255,0.3);">
+        <span>Enter Black Book Reader →</span>
+      </button>
+
+      <!-- Backup Passkey Form (Developer / Offline Fallback) -->
+      <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px; margin-top: 4px;">
+        <button type="button" onclick="togglePasskeyFallback()" style="background: none; border: none; color: #64748b; font-size: 10px; font-family: var(--font-mono); cursor: pointer; text-decoration: underline;">
+          Developer / Manual Passkey Fallback
+        </button>
+        <div id="manual-key-box" style="display: none; margin-top: 8px;">
+          <div style="display: flex; gap: 6px;">
+            <input type="text" id="manual-passkey-input" placeholder="PASSKEY" style="flex:1; height:36px; background:#07070e; border:1px solid rgba(88,101,242,0.4); border-radius:8px; color:#fff; padding:0 8px; font-family:var(--font-mono); font-size:11px; text-transform:uppercase;">
+            <button onclick="verifyManualPasskey()" style="height:36px; padding:0 12px; background:#222; border:1px solid #444; border-radius:8px; color:#fff; font-weight:bold; font-size:11px; cursor:pointer;">Unlock</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size: 10px; font-family: var(--font-mono); color: #71717a;">
+        STEP 3 OF 3 • OAUTH2 COMMUNITY VERIFICATION
       </div>
     </div>
 
@@ -529,103 +928,45 @@
        MAIN READER APPLICATION LAYOUT
        ========================================================================= -->
   <div id="app">
-    
     <!-- TOP APP BAR -->
     <header class="top-bar">
-      <!-- Left: Book Identity & Credits -->
-      <div class="flex items-center gap-2 min-w-0 flex-1">
-        <button 
-          id="btn-toc" 
-          onclick="openLeftDrawer()" 
-          class="flex items-center justify-center w-8 h-8 rounded-reader bg-obsidian-card hover:bg-obsidian-hover border border-obsidian-border text-white transition-colors flex-none" 
-          title="Chapters & Bookmarks">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="4" x2="20" y1="6" y2="6"></line>
-            <line x1="4" x2="20" y1="12" y2="12"></line>
-            <line x1="4" x2="20" y1="18" y2="18"></line>
-          </svg>
-        </button>
+      <div class="brand-section">
+        <div class="book-glyph">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        </div>
 
-        <div class="flex flex-col min-w-0 leading-tight">
-          <span class="text-[13px] font-bold text-white truncate tracking-tight">
-            Black Book of English
-          </span>
-          <span class="text-[10px] font-mono text-obsidian-muted truncate">
-            Curated by <strong class="text-white font-semibold">Kavy-Codes / krush91</strong>
-          </span>
+        <div class="meta-col">
+          <span class="book-title">Black Book of English</span>
+          <span class="creator-pill">Curated by <strong>Kavy-Codes / krush91</strong></span>
         </div>
       </div>
 
-      <!-- Right: Action & Filter Controls -->
-      <div class="flex items-center space-x-1.5 flex-none">
-        
-        <!-- OLED Dark Page Invert Toggle -->
-        <button 
-          id="btn-toggle-oled" 
-          onclick="toggleOledInvert()" 
-          class="flex items-center justify-center w-8 h-8 rounded-reader bg-obsidian-card hover:bg-obsidian-hover border border-obsidian-border text-obsidian-text transition-colors" 
-          title="Toggle OLED Dark Mode (I)" 
-          aria-label="Toggle OLED Mode">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"></path>
-          </svg>
+      <div class="top-actions">
+        <button id="btn-toggle-oled" class="btn btn-border" title="Toggle OLED Dark Mode (I)" aria-label="Toggle OLED Mode">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"></path></svg>
         </button>
 
-        <!-- Grayscale E-Ink Toggle -->
-        <button 
-          id="btn-toggle-gray" 
-          onclick="toggleGrayscale()" 
-          class="flex items-center justify-center w-8 h-8 rounded-reader bg-obsidian-card hover:bg-obsidian-hover border border-obsidian-border text-obsidian-text transition-colors" 
-          title="Grayscale Mode (G)" 
-          aria-label="Toggle Grayscale">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M12 2a10 10 0 0 1 0 20Z" fill="currentColor"></path>
-          </svg>
+        <button id="btn-fs" class="btn btn-border" aria-label="Toggle Fullscreen" title="Toggle Fullscreen (F)">
+          <svg id="fs-enter" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+          <svg id="fs-exit" style="display:none;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
         </button>
 
-        <!-- Fullscreen Controller -->
-        <button 
-          id="btn-fs" 
-          onclick="toggleFullscreen()" 
-          class="flex items-center justify-center w-8 h-8 rounded-reader bg-obsidian-card hover:bg-obsidian-hover border border-obsidian-border text-obsidian-text transition-colors" 
-          aria-label="Toggle Fullscreen" 
-          title="Toggle Fullscreen (F)">
-          <svg id="fs-enter" class="w-4 h-4 block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
-          </svg>
-          <svg id="fs-exit" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
-          </svg>
-        </button>
-
-        <!-- Preferences / Community Drawer -->
-        <button 
-          id="btn-open-settings" 
-          onclick="openRightDrawer()" 
-          class="flex items-center justify-center w-8 h-8 rounded-reader bg-obsidian-card hover:bg-obsidian-hover border border-obsidian-border text-obsidian-text transition-colors" 
-          aria-label="Reader Settings" 
-          title="Preferences & Tools">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-          </svg>
+        <button id="btn-open-settings" class="btn btn-border" aria-label="Reader Settings" title="Preferences">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         </button>
       </div>
     </header>
 
-    <!-- MAIN READING VIEWPORT -->
     <main class="reader-stage">
       <div id="loader" class="stage-loader">
         <div class="pulse-ring"></div>
-        <span class="text-[11px] text-obsidian-muted font-mono tracking-wider">
-          LOADING BLACK BOOK ARCHIVE...
-        </span>
+        <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); letter-spacing: 0.05em;">AWAITING COMMUNITY VERIFICATION...</span>
       </div>
 
+      <!-- Iframe is unpopulated until member JWT is confirmed -->
       <iframe
         id="archive-iframe"
-        src="https://archive.org/embed/blackbook_202609"
+        src=""
         frameborder="0"
         webkitallowfullscreen="true"
         mozallowfullscreen="true"
@@ -633,240 +974,114 @@
       </iframe>
     </main>
 
-    <!-- PROMINENT BOTTOM DISCORD ACTION DOCK -->
+    <!-- PROMINENT BOTTOM DISCORD ACTION BAR -->
     <nav class="bottom-discord-dock">
       <a href="https://discord.com/invite/jEWhUtJNE" target="_blank" rel="noopener noreferrer" class="btn-discord-hero" title="Join Official Discord Server">
-        <div class="flex items-center gap-3 min-w-0">
-          <svg class="w-7 h-7 flex-shrink-0 text-white drop-shadow-md" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+        <div class="discord-hero-left">
+          <svg class="discord-hero-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.078.078 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
           </svg>
-
-          <div class="flex flex-col text-left leading-tight min-w-0">
-            <span class="text-[13px] font-extrabold uppercase tracking-wide text-white whitespace-nowrap">
-              Join Official Discord
-            </span>
-            <span class="text-[10px] text-indigo-100 flex items-center gap-1.5 whitespace-nowrap overflow-hidden text-ellipsis">
-              <span class="live-dot-glow"></span> Study Community • Kavy-Codes / krush91
-            </span>
+          <div class="discord-hero-text">
+            <span class="discord-hero-main">Join Official Discord</span>
+            <span class="discord-hero-sub"><span class="live-dot-glow"></span> Study Community • Kavy-Codes</span>
           </div>
         </div>
 
-        <svg class="w-5 h-5 text-white/90 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
+        <svg class="discord-hero-chevron" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </a>
     </nav>
 
-  </div>
+    <!-- BACKDROP & DRAWERS -->
+    <div id="backdrop" class="backdrop"></div>
 
-  <!-- BACKDROP FOR DRAWERS -->
-  <div 
-    id="backdrop" 
-    onclick="closeAllOverlays()" 
-    class="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-200"
-    aria-hidden="true">
-  </div>
-
-  <!-- LEFT DRAWER: NAVIGATION & CHAPTERS -->
-  <aside 
-    id="drawer-left" 
-    class="fixed top-0 bottom-0 left-0 w-[86vw] sm:w-[380px] max-w-[420px] bg-obsidian-base border-r border-obsidian-border z-50 transform -translate-x-full drawer-transition flex flex-col pt-[var(--sat)] pb-[var(--sab)]">
-    
-    <div class="flex items-center justify-between px-4 py-3 border-b border-obsidian-border">
-      <div class="flex items-center space-x-2">
-        <svg class="w-4 h-4 text-obsidian-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-        </svg>
-        <span class="text-[11px] font-semibold uppercase tracking-wider text-obsidian-text">
-          Index & Direct Jump
-        </span>
+    <aside id="drawer-left" class="drawer drawer-left">
+      <div class="drawer-head">
+        <span class="drawer-title">Index & Jump</span>
+        <button id="btn-close-left" class="btn">✕</button>
       </div>
-      <button 
-        onclick="closeAllOverlays()" 
-        class="w-7 h-7 rounded-reader flex items-center justify-center hover:bg-obsidian-card border border-transparent hover:border-obsidian-border text-obsidian-muted hover:text-white transition-colors">
-        ✕
-      </button>
-    </div>
-
-    <div class="flex-1 overflow-y-auto p-4 space-y-4">
-      
-      <!-- Direct Jump -->
-      <div>
-        <label class="text-[10px] font-mono uppercase text-obsidian-muted tracking-wider block mb-1.5">Direct Page Jump</label>
-        <div class="flex space-x-2">
-          <input 
-            type="number" 
-            id="page-num-input" 
-            class="flex-1 h-9 bg-obsidian-card border border-obsidian-border rounded-reader px-3 text-[12px] text-white font-mono focus:border-obsidian-borderFocus" 
-            placeholder="Page (e.g. 45)" 
-            min="1" 
-            max="700">
-          <button 
-            id="btn-page-go" 
-            class="h-9 px-4 bg-obsidian-card hover:bg-obsidian-hover border border-obsidian-border text-[12px] font-semibold text-white rounded-reader transition-colors">
-            Go
-          </button>
-        </div>
-      </div>
-
-      <!-- Core Chapters -->
-      <div>
-        <div class="text-[10px] font-mono uppercase text-obsidian-muted tracking-wider font-semibold mb-2">Core Chapters</div>
-        <ul class="space-y-1">
-          <li class="index-item flex items-center justify-between p-2.5 rounded-reader hover:bg-obsidian-card border border-transparent hover:border-obsidian-border cursor-pointer transition-colors" data-page="1">
-            <span class="text-[12px] text-obsidian-text">Front Cover & Meta</span>
-            <span class="text-[10px] font-mono text-obsidian-muted px-1.5 py-0.5 rounded bg-obsidian-card border border-obsidian-border">p. 1</span>
-          </li>
-          <li class="index-item flex items-center justify-between p-2.5 rounded-reader hover:bg-obsidian-card border border-transparent hover:border-obsidian-border cursor-pointer transition-colors" data-page="5">
-            <span class="text-[12px] text-obsidian-text">Table of Contents</span>
-            <span class="text-[10px] font-mono text-obsidian-muted px-1.5 py-0.5 rounded bg-obsidian-card border border-obsidian-border">p. 5</span>
-          </li>
-          <li class="index-item flex items-center justify-between p-2.5 rounded-reader hover:bg-obsidian-card border border-transparent hover:border-obsidian-border cursor-pointer transition-colors" data-page="15">
-            <span class="text-[12px] text-obsidian-text">One Word Substitutions</span>
-            <span class="text-[10px] font-mono text-obsidian-muted px-1.5 py-0.5 rounded bg-obsidian-card border border-obsidian-border">p. 15</span>
-          </li>
-          <li class="index-item flex items-center justify-between p-2.5 rounded-reader hover:bg-obsidian-card border border-transparent hover:border-obsidian-border cursor-pointer transition-colors" data-page="145">
-            <span class="text-[12px] text-obsidian-text">Idioms & Phrases</span>
-            <span class="text-[10px] font-mono text-obsidian-muted px-1.5 py-0.5 rounded bg-obsidian-card border border-obsidian-border">p. 145</span>
-          </li>
-          <li class="index-item flex items-center justify-between p-2.5 rounded-reader hover:bg-obsidian-card border border-transparent hover:border-obsidian-border cursor-pointer transition-colors" data-page="260">
-            <span class="text-[12px] text-obsidian-text">Synonyms & Antonyms</span>
-            <span class="text-[10px] font-mono text-obsidian-muted px-1.5 py-0.5 rounded bg-obsidian-card border border-obsidian-border">p. 260</span>
-          </li>
-          <li class="index-item flex items-center justify-between p-2.5 rounded-reader hover:bg-obsidian-card border border-transparent hover:border-obsidian-border cursor-pointer transition-colors" data-page="420">
-            <span class="text-[12px] text-obsidian-text">Common Spelling Errors</span>
-            <span class="text-[10px] font-mono text-obsidian-muted px-1.5 py-0.5 rounded bg-obsidian-card border border-obsidian-border">p. 420</span>
-          </li>
-          <li class="index-item flex items-center justify-between p-2.5 rounded-reader hover:bg-obsidian-card border border-transparent hover:border-obsidian-border cursor-pointer transition-colors" data-page="510">
-            <span class="text-[12px] text-obsidian-text">Phrasal Verbs & Usage</span>
-            <span class="text-[10px] font-mono text-obsidian-muted px-1.5 py-0.5 rounded bg-obsidian-card border border-obsidian-border">p. 510</span>
-          </li>
-          <li class="index-item flex items-center justify-between p-2.5 rounded-reader hover:bg-obsidian-card border border-transparent hover:border-obsidian-border cursor-pointer transition-colors" data-page="615">
-            <span class="text-[12px] text-obsidian-text">Practice Sets & Exam Mock</span>
-            <span class="text-[10px] font-mono text-obsidian-muted px-1.5 py-0.5 rounded bg-obsidian-card border border-obsidian-border">p. 615</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Saved Bookmarks -->
-      <div class="pt-2 border-t border-obsidian-border">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-[10px] font-mono uppercase text-obsidian-muted tracking-wider font-semibold">Saved Marks</span>
-          <button id="btn-add-bm-drawer" class="px-2 py-0.5 text-[11px] rounded-reader bg-obsidian-card hover:bg-obsidian-hover border border-obsidian-border text-white transition-colors">+ Mark</button>
-        </div>
-        <ul id="bookmark-list" class="space-y-1"></ul>
-      </div>
-
-    </div>
-  </aside>
-
-  <!-- RIGHT DRAWER: COMMUNITY & SETTINGS -->
-  <aside 
-    id="drawer-right" 
-    class="fixed top-0 bottom-0 right-0 w-[86vw] sm:w-[380px] max-w-[420px] bg-obsidian-base border-l border-obsidian-border z-50 transform translate-x-full drawer-transition flex flex-col pt-[var(--sat)] pb-[var(--sab)]">
-    
-    <div class="flex items-center justify-between px-4 py-3 border-b border-obsidian-border">
-      <div class="flex items-center space-x-2">
-        <svg class="w-4 h-4 text-obsidian-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="3"></circle>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-        </svg>
-        <span class="text-[11px] font-semibold uppercase tracking-wider text-obsidian-text">
-          Community & Preferences
-        </span>
-      </div>
-      <button 
-        onclick="closeAllOverlays()" 
-        class="w-7 h-7 rounded-reader flex items-center justify-center hover:bg-obsidian-card border border-transparent hover:border-obsidian-border text-obsidian-muted hover:text-white transition-colors">
-        ✕
-      </button>
-    </div>
-
-    <div class="flex-1 overflow-y-auto p-4 space-y-5">
-      
-      <!-- PROMINENT DISCORD COMMUNITY CARD -->
-      <div class="relative overflow-hidden rounded-xl border border-indigo-500/35 bg-gradient-to-br from-[#121324] to-[#0c0d18] p-4 shadow-xl">
-        <div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-indigo-500/20 border border-indigo-500/40 text-[10px] font-mono font-medium text-indigo-300 w-fit mb-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]"></span>
-          OFFICIAL COMMUNITY
-        </div>
-        <h3 class="text-[15px] font-bold text-white tracking-tight">Join Kavy's Study Hub</h3>
-        <p class="text-[11px] text-slate-300 leading-relaxed mt-1 mb-3">
-          Daily Black Book quizzes, SSC & competitive exam circles, and direct updates from Kavy-Codes / krush91.
-        </p>
-
-        <!-- Big CTA Button -->
-        <a 
-          href="https://discord.com/invite/jEWhUtJNE" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          class="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-[13px] rounded-lg shadow-lg shadow-indigo-600/30 transition-all active:scale-[0.98]">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-          </svg>
-          JOIN OFFICIAL SERVER
-        </a>
-
-        <!-- Attribution Info -->
-        <div class="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[10px] text-slate-400">
-          <span>Curated by <strong class="text-white">Kavy-Codes / krush91</strong></span>
-          <span class="font-mono bg-white/5 px-2 py-0.5 rounded border border-white/10 text-slate-300">ID: 930434072449257502</span>
-        </div>
-      </div>
-
-      <!-- Document Display Filters -->
-      <div>
-        <div class="text-[10px] font-mono uppercase text-obsidian-muted tracking-wider font-semibold mb-2">Reading Filters (Iframe Isolation)</div>
-        
-        <div class="space-y-2">
-          <div class="flex items-center justify-between p-3 rounded-reader bg-obsidian-card border border-obsidian-border">
-            <div>
-              <span class="text-[12px] font-medium text-white block">OLED Dark Page Invert</span>
-              <span class="text-[10px] text-obsidian-dim">Hardware GPU dark transformation</span>
-            </div>
-            <input type="checkbox" id="switch-invert" class="w-4 h-4 accent-white cursor-pointer" onchange="handleInvertSwitch(this.checked)">
-          </div>
-
-          <div class="flex items-center justify-between p-3 rounded-reader bg-obsidian-card border border-obsidian-border">
-            <div>
-              <span class="text-[12px] font-medium text-white block">E-Ink Grayscale</span>
-              <span class="text-[10px] text-obsidian-dim">Removes page saturation</span>
-            </div>
-            <input type="checkbox" id="switch-gray" class="w-4 h-4 accent-white cursor-pointer" onchange="handleGraySwitch(this.checked)">
+      <div class="drawer-content">
+        <div>
+          <div class="section-label">Direct Page Jump</div>
+          <div class="page-jump-row">
+            <input type="number" id="page-num-input" class="page-input" placeholder="Page (e.g. 45)" min="1" max="700">
+            <button id="btn-page-go" class="btn-submit-jump">Go</button>
           </div>
         </div>
+
+        <div>
+          <div class="section-label">Core Chapters</div>
+          <ul class="index-list">
+            <li class="index-item" data-page="1"><span>Front Cover & Meta</span><span class="page-tag">p. 1</span></li>
+            <li class="index-item" data-page="5"><span>Table of Contents</span><span class="page-tag">p. 5</span></li>
+            <li class="index-item" data-page="15"><span>One Word Substitutions</span><span class="page-tag">p. 15</span></li>
+            <li class="index-item" data-page="145"><span>Idioms & Phrases</span><span class="page-tag">p. 145</span></li>
+            <li class="index-item" data-page="260"><span>Synonyms & Antonyms</span><span class="page-tag">p. 260</span></li>
+            <li class="index-item" data-page="420"><span>Common Spelling Errors</span><span class="page-tag">p. 420</span></li>
+            <li class="index-item" data-page="510"><span>Phrasal Verbs & Usage</span><span class="page-tag">p. 510</span></li>
+            <li class="index-item" data-page="615"><span>Practice Sets & Exam Mock</span><span class="page-tag">p. 615</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="section-label">
+            <span>Saved Marks</span>
+            <button id="btn-add-bm-drawer" class="btn btn-border" style="height:24px; padding:0 8px; font-size:11px;">+ Mark</button>
+          </div>
+          <ul id="bookmark-list" class="bm-list"></ul>
+        </div>
       </div>
+    </aside>
 
-      <!-- Study Notes -->
-      <div class="pt-2 border-t border-obsidian-border">
-        <label class="text-[10px] font-mono uppercase text-obsidian-muted tracking-wider font-semibold block mb-1.5">Vocabulary Scratchpad</label>
-        <textarea 
-          id="study-notes" 
-          rows="4" 
-          placeholder="Jot down high-frequency roots, mnemonics, or test reminders..." 
-          class="w-full bg-obsidian-card border border-obsidian-border rounded-reader p-2.5 text-[12px] text-white font-mono focus:border-obsidian-borderFocus resize-none"></textarea>
-        <button 
-          id="btn-copy-notes" 
-          class="w-full mt-2 py-2 rounded-reader bg-obsidian-card hover:bg-obsidian-hover border border-obsidian-border text-[11px] font-semibold text-white transition-colors">
-          Copy Notes to Clipboard
-        </button>
+    <aside id="drawer-right" class="drawer drawer-right">
+      <div class="drawer-head">
+        <span class="drawer-title">Community & Settings</span>
+        <button id="btn-close-right" class="btn">✕</button>
       </div>
+      <div class="drawer-content">
+        <div>
+          <div class="section-label">Reading Filters (PDF Isolation)</div>
+          <div class="pref-item">
+            <div>
+              <div class="pref-title">OLED Dark Page Invert</div>
+              <div class="pref-desc">Inverts bright PDF pages to true black</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="switch-invert">
+              <span class="slider"></span>
+            </label>
+          </div>
 
-    </div>
+          <div class="pref-item">
+            <div>
+              <div class="pref-title">E-Ink Grayscale</div>
+              <div class="pref-desc">Strips page saturation for minimal eye fatigue</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="switch-gray">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
 
-    <!-- Attribution Footer -->
-    <div class="p-3 border-t border-obsidian-border bg-obsidian-card/40 text-[10px] text-obsidian-muted flex justify-between font-mono">
-      <span>KAVY-CODES</span>
-      <span>DISCORD: 930434072449257502</span>
-    </div>
-  </aside>
+        <div>
+          <div class="section-label">Study Notes & Vocab Pad</div>
+          <textarea id="study-notes" class="notes-box" placeholder="Jot down unfamiliar words, mnemonics, or page reminders..."></textarea>
+          <button id="btn-copy-notes" class="btn btn-border" style="width:100%; margin-top:8px; height:36px; font-weight:600;">Copy Notes</button>
+        </div>
+      </div>
+    </aside>
 
-  <!-- TOAST CONTAINER -->
-  <div id="toast-box" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-col items-center space-y-2"></div>
+    <div id="toast-box" class="toast-box"></div>
+  </div>
 
   <script>
+    // =========================================================================
+    // CONFIGURATION: Connected directly to your deployed Cloudflare Worker
+    // =========================================================================
+    const WORKER_AUTH_URL = "https://discord-reader-auth.kavyatiwari-me.workers.dev";
+    const PROTECTED_ARCHIVE_SLUG = "blackbook_202609";
+    const BASE_ARCHIVE_URL = `https://archive.org/embed/${PROTECTED_ARCHIVE_SLUG}`;
+
     const State = {
       grayscale: false,
       oledInvert: false,
@@ -878,75 +1093,137 @@
       notes: ""
     };
 
-    const BASE_ARCHIVE_URL = "https://archive.org/embed/blackbook_202609";
-
-    /* =========================================================================
-       THREE-STEP ANTI-TAMPER SECURITY PIPELINE FLOW
-       ========================================================================= */
+    /* Navigation steps */
     function goToStep2() {
-      const step1 = document.getElementById('sec-step-1');
-      const step2 = document.getElementById('sec-step-2');
-      if (step1 && step2) {
-        step1.classList.add('hidden');
-        step2.classList.remove('hidden');
-        step2.classList.add('flex');
-      }
+      document.getElementById('sec-step-1').style.display = 'none';
+      document.getElementById('sec-step-2').style.display = 'flex';
     }
 
     function goToStep3() {
-      const step2 = document.getElementById('sec-step-2');
-      const step3 = document.getElementById('sec-step-3');
-      if (step2 && step3) {
-        step2.classList.add('hidden');
-        step3.classList.remove('hidden');
-        step3.classList.add('flex');
+      document.getElementById('sec-step-2').style.display = 'none';
+      document.getElementById('sec-step-3').style.display = 'flex';
+    }
+
+    /* Start Discord OAuth2 Login */
+    function startDiscordOAuth() {
+      window.location.href = `${WORKER_AUTH_URL}/auth/login`;
+    }
+
+    /* Verify session on load */
+    async function checkAuthSession() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tokenFromUrl = urlParams.get('auth_token');
+      const errorFromUrl = urlParams.get('auth_error');
+
+      // Clear query string from URL bar without reload
+      if (tokenFromUrl || errorFromUrl) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+
+      if (tokenFromUrl) {
+        localStorage.setItem('bb_oauth_jwt', tokenFromUrl);
+      }
+
+      if (errorFromUrl) {
+        goToStep3();
+        const errBox = document.getElementById('oauth-error-box');
+        const errTxt = document.getElementById('oauth-error-text');
+        if (errBox && errTxt) {
+          errBox.style.display = 'block';
+          errTxt.textContent = `Authentication error: ${decodeURIComponent(errorFromUrl)}`;
+        }
+        return;
+      }
+
+      const savedToken = localStorage.getItem('bb_oauth_jwt');
+      if (!savedToken) return;
+
+      try {
+        const res = await fetch(`${WORKER_AUTH_URL}/auth/verify?token=${encodeURIComponent(savedToken)}`);
+        const data = await res.json();
+
+        if (data.valid && data.isMember) {
+          // Display authenticated user card
+          goToStep3();
+          const userBadge = document.getElementById('oauth-user-badge');
+          const userAvatar = document.getElementById('oauth-user-avatar');
+          const userName = document.getElementById('oauth-user-name');
+          const actionsBox = document.getElementById('oauth-actions-container');
+          const enterBtn = document.getElementById('btn-enter-reader');
+
+          if (userBadge && userName && userAvatar) {
+            userBadge.style.display = 'flex';
+            userName.textContent = `@${data.user.username}`;
+            userAvatar.src = data.user.avatar 
+              ? `https://cdn.discordapp.com/avatars/${data.user.id}/${data.user.avatar}.png?size=64`
+              : 'https://cdn.discordapp.com/embed/avatars/0.png';
+          }
+
+          if (actionsBox) actionsBox.style.display = 'none';
+          if (enterBtn) enterBtn.style.display = 'inline-flex';
+
+          showToast(`Verified Member: @${data.user.username}`);
+        } else {
+          localStorage.removeItem('bb_oauth_jwt');
+        }
+      } catch (e) {
+        console.warn('OAuth token validation offline or failed.');
       }
     }
 
+    /* Fallback passkey verification */
+    function togglePasskeyFallback() {
+      const el = document.getElementById('manual-key-box');
+      if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function verifyManualPasskey() {
+      const input = document.getElementById('manual-passkey-input');
+      if (!input) return;
+      const key = input.value.trim().toUpperCase();
+      if (key === 'KAVY-BLACKBOOK-2026' || key === 'KRUSH91-VIP') {
+        enterReader();
+      } else {
+        showToast('Invalid passkey. Verify via Discord');
+      }
+    }
+
+    /* Unlock reader */
     function enterReader() {
+      const iframe = document.getElementById('archive-iframe');
+      const loader = document.getElementById('loader');
       const overlay = document.getElementById('security-overlay');
+
+      if (iframe && !iframe.src) {
+        if (loader) loader.querySelector('span').textContent = 'LOADING VERIFIED ARCHIVE...';
+        iframe.src = BASE_ARCHIVE_URL;
+      }
+
       if (overlay) {
         overlay.style.opacity = '0';
         overlay.style.pointerEvents = 'none';
-        setTimeout(() => {
-          overlay.remove();
-        }, 300);
+        setTimeout(() => overlay.remove(), 300);
       }
-      showToast('Welcome to Black Book Reader');
+      showToast('Verified Access Granted');
     }
 
-    /* =========================================================================
-       READER FILTERS & DOCUMENT ACTIONS
-       ========================================================================= */
     function applyDocumentFilters() {
       const iframe = document.getElementById('archive-iframe');
       if (!iframe) return;
 
       const filters = [];
-      if (State.oledInvert) {
-        filters.push('invert(0.92) hue-rotate(180deg) contrast(1.15)');
-      }
-      if (State.grayscale) {
-        filters.push('grayscale(1)');
-      }
+      if (State.oledInvert) filters.push('invert(0.92) hue-rotate(180deg) contrast(1.15)');
+      if (State.grayscale) filters.push('grayscale(1)');
 
       iframe.style.filter = filters.length > 0 ? filters.join(' ') : 'none';
 
       const btnOledTop = document.getElementById('btn-toggle-oled');
-      const btnGrayTop = document.getElementById('btn-toggle-gray');
-      const switchInvert = document.getElementById('switch-invert');
       const switchGray = document.getElementById('switch-gray');
+      const switchInvert = document.getElementById('switch-invert');
 
-      if (btnOledTop) btnOledTop.classList.toggle('pill-active', State.oledInvert);
-      if (btnGrayTop) btnGrayTop.classList.toggle('pill-active', State.grayscale);
-      if (switchInvert) switchInvert.checked = State.oledInvert;
+      if (btnOledTop) btnOledTop.classList.toggle('btn-active', State.oledInvert);
       if (switchGray) switchGray.checked = State.grayscale;
-    }
-
-    function toggleOledInvert() {
-      State.oledInvert = !State.oledInvert;
-      applyDocumentFilters();
-      showToast(State.oledInvert ? 'OLED Dark Mode: Active' : 'Default View: Active');
+      if (switchInvert) switchInvert.checked = State.oledInvert;
     }
 
     function toggleGrayscale() {
@@ -955,77 +1232,51 @@
       showToast(State.grayscale ? 'Grayscale: On' : 'Grayscale: Off');
     }
 
-    function handleInvertSwitch(checked) {
-      State.oledInvert = checked;
+    function toggleOledInvert() {
+      State.oledInvert = !State.oledInvert;
       applyDocumentFilters();
       showToast(State.oledInvert ? 'OLED Dark Mode: Active' : 'Default View: Active');
     }
 
-    function handleGraySwitch(checked) {
-      State.grayscale = checked;
-      applyDocumentFilters();
-      showToast(State.grayscale ? 'Grayscale: On' : 'Grayscale: Off');
-    }
-
     function showToast(msg) {
       const box = document.getElementById('toast-box');
-      if (!box) return;
       const el = document.createElement('div');
-      el.className = 'px-3 py-1.5 rounded-reader bg-obsidian-card/95 border border-obsidian-border text-[11px] font-medium text-obsidian-text shadow-xl backdrop-blur-md transition-all duration-200 opacity-0 translate-y-2';
+      el.className = 'toast-item';
       el.textContent = msg;
       box.appendChild(el);
-
-      requestAnimationFrame(() => {
-        el.classList.remove('opacity-0', 'translate-y-2');
-      });
-
+      requestAnimationFrame(() => el.classList.add('show'));
       setTimeout(() => {
-        el.classList.add('opacity-0', 'translate-y-2');
-        setTimeout(() => el.remove(), 250);
+        el.classList.remove('show');
+        setTimeout(() => el.remove(), 200);
       }, 2200);
     }
 
-    /* =========================================================================
-       DRAWER & MODAL OVERLAYS
-       ========================================================================= */
     const backdrop = document.getElementById('backdrop');
     const drawerLeft = document.getElementById('drawer-left');
     const drawerRight = document.getElementById('drawer-right');
 
     function closeAllOverlays() {
-      if (drawerLeft) drawerLeft.classList.add('-translate-x-full');
-      if (drawerRight) drawerRight.classList.add('translate-x-full');
-      if (backdrop) {
-        backdrop.classList.remove('opacity-100');
-        backdrop.classList.add('opacity-0', 'pointer-events-none');
-      }
+      if (drawerLeft) drawerLeft.classList.remove('open');
+      if (drawerRight) drawerRight.classList.remove('open');
+      if (backdrop) backdrop.classList.remove('open');
     }
 
     function openLeftDrawer() {
       closeAllOverlays();
-      if (drawerLeft) drawerLeft.classList.remove('-translate-x-full');
-      if (backdrop) {
-        backdrop.classList.remove('pointer-events-none', 'opacity-0');
-        backdrop.classList.add('opacity-100');
-      }
+      if (drawerLeft) drawerLeft.classList.add('open');
+      if (backdrop) backdrop.classList.add('open');
       renderBookmarks();
     }
 
     function openRightDrawer() {
       closeAllOverlays();
-      if (drawerRight) drawerRight.classList.remove('translate-x-full');
-      if (backdrop) {
-        backdrop.classList.remove('pointer-events-none', 'opacity-0');
-        backdrop.classList.add('opacity-100');
-      }
+      if (drawerRight) drawerRight.classList.add('open');
+      if (backdrop) backdrop.classList.add('open');
     }
 
     function jumpToPage(pageNumber) {
       const page = parseInt(pageNumber, 10);
-      if (isNaN(page) || page < 1) {
-        showToast('Please enter a valid page number');
-        return;
-      }
+      if (isNaN(page) || page < 1) return showToast('Please enter a valid page number');
 
       const iframe = document.getElementById('archive-iframe');
       const loader = document.getElementById('loader');
@@ -1042,44 +1293,29 @@
       container.innerHTML = '';
 
       if (State.bookmarks.length === 0) {
-        container.innerHTML = '<li class="text-obsidian-dim text-[11px] py-2">No bookmarks saved yet.</li>';
+        container.innerHTML = '<li style="color:var(--text-faint); font-size:12px; padding:6px 0;">No bookmarks recorded.</li>';
         return;
       }
 
       State.bookmarks.forEach((bm, i) => {
         const li = document.createElement('li');
-        li.className = 'flex items-center justify-between p-2.5 rounded-reader hover:bg-obsidian-card border border-transparent hover:border-obsidian-border cursor-pointer transition-colors';
+        li.className = 'bm-item';
         li.innerHTML = `
-          <span class="text-[12px] text-obsidian-text truncate">${bm.label}</span>
-          <div class="flex items-center space-x-1.5 flex-none">
-            <span class="text-[10px] font-mono text-obsidian-muted px-1.5 py-0.5 rounded bg-obsidian-card border border-obsidian-border">p. ${bm.page}</span>
-            <button data-del="${i}" class="text-obsidian-dim hover:text-red-400 p-1 text-[11px]">✕</button>
+          <span>${bm.label}</span>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="page-tag">p. ${bm.page}</span>
+            <button data-del="${i}" style="background:none; border:none; color:var(--text-muted); cursor:pointer;">✕</button>
           </div>
         `;
-
         li.addEventListener('click', () => jumpToPage(bm.page));
-
-        const delBtn = li.querySelector('button');
-        delBtn.addEventListener('click', (e) => {
+        li.querySelector('button').addEventListener('click', (e) => {
           e.stopPropagation();
           State.bookmarks.splice(i, 1);
           renderBookmarks();
-          showToast('Bookmark removed');
+          showToast('Bookmark deleted');
         });
-
         container.appendChild(li);
       });
-    }
-
-    function addBookmarkCurrent() {
-      const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const newMark = {
-        label: `Saved Mark (${timeString})`,
-        page: 1
-      };
-      State.bookmarks.unshift(newMark);
-      renderBookmarks();
-      showToast('Page bookmark saved');
     }
 
     function isFullscreen() {
@@ -1090,45 +1326,30 @@
       const el = document.documentElement;
       if (!isFullscreen()) {
         const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen;
-        if (req) {
-          req.call(el).catch(() => showToast('Fullscreen blocked by browser'));
-        } else {
-          showToast('iOS Tip: Tap Share → "Add to Home Screen"');
-        }
+        if (req) req.call(el).catch(() => showToast('Fullscreen prevented by browser'));
       } else {
         const exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
         if (exit) exit.call(document).catch(() => {});
       }
     }
 
-    function updateFullscreenIcons() {
-      const active = isFullscreen();
-      const enter = document.getElementById('fs-enter');
-      const exit = document.getElementById('fs-exit');
-      if (enter && exit) {
-        enter.classList.toggle('hidden', active);
-        exit.classList.toggle('hidden', !active);
-      }
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
       applyDocumentFilters();
       renderBookmarks();
+      checkAuthSession();
+
+      document.getElementById('btn-toggle-oled').addEventListener('click', toggleOledInvert);
+      document.getElementById('btn-fs').addEventListener('click', toggleFullscreen);
+      document.getElementById('btn-open-settings').addEventListener('click', openRightDrawer);
+      document.getElementById('btn-close-left').addEventListener('click', closeAllOverlays);
+      document.getElementById('btn-close-right').addEventListener('click', closeAllOverlays);
+      if (backdrop) backdrop.addEventListener('click', closeAllOverlays);
 
       const btnGo = document.getElementById('btn-page-go');
       if (btnGo) {
         btnGo.addEventListener('click', () => {
           const input = document.getElementById('page-num-input');
           if (input && input.value) jumpToPage(input.value);
-        });
-      }
-
-      const pageInput = document.getElementById('page-num-input');
-      if (pageInput) {
-        pageInput.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' && pageInput.value) {
-            jumpToPage(pageInput.value);
-          }
         });
       }
 
@@ -1139,25 +1360,28 @@
         });
       });
 
-      const btnAddBm = document.getElementById('btn-add-bm-drawer');
-      if (btnAddBm) btnAddBm.addEventListener('click', addBookmarkCurrent);
+      const switchGray = document.getElementById('switch-gray');
+      if (switchGray) {
+        switchGray.addEventListener('change', (e) => {
+          State.grayscale = e.target.checked;
+          applyDocumentFilters();
+        });
+      }
+
+      const switchInvert = document.getElementById('switch-invert');
+      if (switchInvert) {
+        switchInvert.addEventListener('change', (e) => {
+          State.oledInvert = e.target.checked;
+          applyDocumentFilters();
+        });
+      }
 
       const btnCopyNotes = document.getElementById('btn-copy-notes');
       if (btnCopyNotes) {
         btnCopyNotes.addEventListener('click', () => {
           const text = document.getElementById('study-notes').value;
-          if (!text.trim()) {
-            showToast('Notes are empty');
-            return;
-          }
-          const dummy = document.createElement('textarea');
-          dummy.value = text;
-          dummy.style.position = 'fixed';
-          dummy.style.opacity = '0';
-          document.body.appendChild(dummy);
-          dummy.select();
-          document.execCommand('copy');
-          document.body.removeChild(dummy);
+          if (!text.trim()) return showToast('Notes are empty');
+          navigator.clipboard.writeText(text);
           showToast('Notes copied to clipboard');
         });
       }
@@ -1165,23 +1389,8 @@
       const iframe = document.getElementById('archive-iframe');
       const loader = document.getElementById('loader');
       if (iframe && loader) {
-        iframe.addEventListener('load', () => {
-          loader.classList.add('hidden');
-        });
+        iframe.addEventListener('load', () => loader.classList.add('hidden'));
       }
-
-      document.addEventListener('fullscreenchange', updateFullscreenIcons);
-      document.addEventListener('webkitfullscreenchange', updateFullscreenIcons);
-
-      window.addEventListener('keydown', (e) => {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-
-        const k = e.key.toLowerCase();
-        if (k === 'g') toggleGrayscale();
-        else if (k === 'i') toggleOledInvert();
-        else if (k === 'f') toggleFullscreen();
-        else if (k === 'Escape') closeAllOverlays();
-      });
     });
   </script>
 </body>
